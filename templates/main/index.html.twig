@@ -1,20 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Hello MainController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<section class="py-40 bg-cover bg-center flex justify-center items-center" style="background-image:url('{{asset('images/afpa.png')}}')">
+		<div class="border bg-[#ffffff80] p-10 ">
+			<h1 class="text-xl font-bold inline-block">Afpa Châtellerault</h1>
+		</div>
+	</section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/xampp/htdocs/AFPA/src/Controller/MainController.php</code></li>
-        <li>Your template at <code>C:/xampp/htdocs/AFPA/templates/main/index.html.twig</code></li>
-    </ul>
-</div>
+	<h2 class="flex justify-center text-center capitalize text-xl font-bold mt-5">Découvrez nos différents pôles de formation :</h2>
+
+	<section class="m-10 flex flex-wrap justify-center gap-14">
+
+		{% for pole in poles %}
+			<div class="w-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+				<a href="{{path('app_pole', {id: pole.id})}}">
+					<img class="rounded-t-lg w-96 h-72" src="{{asset(pole.image1)}}" alt=""/>
+				</a>
+				<div class="p-5">
+					<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{pole.name}}</h5>
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 truncate">{{pole.description}}</p>
+					<a href="{{path('app_pole', {id: pole.id})}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#dcd873] rounded-lg hover:bg-[#0b9c9f] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+						Read more
+						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+						</svg>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+
+	<h2 class="flex justify-center text-center capitalize text-xl font-bold mt-5">Découvrez nos différentes formations :</h2>
+
+	<section class="m-10 flex flex-wrap justify-center gap-14">
+		<div id="sp" class="splide pt-10" aria-label="Splide Basic HTML Example">
+			<div class="splide__track">
+				<ul class="splide__list">
+					{% for formation in formations %}
+						<li class="splide__slide">
+
+							<a href="{{path('app_pole', {id: formation.id})}}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+								<img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="{{asset(formation.image1)}}" alt="">
+								<div class="flex flex-col justify-between p-4 leading-normal">
+									<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{formation.name}}</h5>
+									<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{formation.texte1}}</p>
+								</div>
+							</a>
+
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	{% block endjs %}
+		<script src="JS/include.js"></script>
+		<script src="JS/script.js"></script>
+		<script>
+			new Splide('#sp').mount();
+		</script>
+	{% endblock %}
 {% endblock %}

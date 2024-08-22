@@ -1,0 +1,30 @@
+<section class="flex flex-row justify-between my-5">
+
+<article class="ml-10">
+<a href="{{path('app_main')}}">
+<img src="{{asset('images/afpa_logo.jpg')}}" class="h-12" alt="logo afpa" loading="lazy">
+</a>
+</article>
+
+<article class="flex gap-10 mr-10">
+<a href="" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Connexion</a>
+{% if app.user %}
+<a href="" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Déconnexion</a>
+{% else %}
+<a href="{{path('app_register')}}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Inscription</a>
+{% endif %}
+</article>
+
+</section>
+
+<section class="bg-[#86b31c] py-5">
+
+<ul class="flex flex-row justify-around max-lg:gap-5 text-[#dcd873]">
+
+{% for pole in poles %}
+<li><a href="{{path('app_pole', {id: pole.id})}}" class="hover:text-[#0b9c9f] text-xs lg:text-base font-bold">{{pole.name}}</a></li>
+{% endfor %}
+
+</ul>
+
+</section>
