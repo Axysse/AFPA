@@ -28,7 +28,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('pseudo', TextType::class, [
-                'attr' => ['placeholder' => 'Pseudo']
+                
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,

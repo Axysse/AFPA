@@ -7,14 +7,18 @@
 </article>
 
 <article class="flex gap-10 mr-10">
-<a href="" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Connexion</a>
+<a href="{{path('app_login')}}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Connexion</a>
 {% if app.user %}
-<a href="" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Déconnexion</a>
+<a href="{{ path('app_logout') }}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Déconnexion</a>
 {% else %}
 <a href="{{path('app_register')}}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Inscription</a>
 {% endif %}
 </article>
 
+</section>
+
+<section class="bg-[#86b31c] py-2 flex justify-center underline decoration-[#dcd873] underline-offset-8">
+    <a href="{{path('app_formations')}}" class="text-[#dcd873] hover:text-[#0b9c9f] text-xs lg:text-base font-bold">Nos formations</a>
 </section>
 
 <section class="bg-[#86b31c] py-5">

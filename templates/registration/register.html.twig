@@ -5,33 +5,34 @@
 
 {% block body %}
 
-	<section class="flex flex-col justify-center items-center  mx-auto gap-3 bg-center" style="background-image:url('{{asset('images/afpa.png')}}')">
+	<section class="flex flex-col justify-center items-center mx-auto gap-3 bg-center" style="background-image:url('{{asset('images/afpa.png')}}')">
 
-		<article class="border bg-cover my-20 rounded-full shadow-2xl" style="background-image:url('{{asset('images/pain.jpg')}}')">
-            <div class="bg-[#ffffff80] rounded-full p-20">
-			<h1>Rejoins nous!</h1>
+		<article class="border bg-cover my-20 rounded-full shadow-2xl" style="background-image:url('{{asset('images/logo.jpeg')}}')">
+			<div class="bg-[#ffffff80] flex flex-col justify-center items-center rounded-full p-20">
+				<h1 class="mb-2">Rejoins nous!</h1>
 
-			{{ form_errors(registrationForm) }}
-
-			{{ form_start(registrationForm) }}
-			<div class="mb-5">
-				{{ form_row(registrationForm.email) }}
-			</div>
-			<div class="mb-5">
-				{{form_row(registrationForm.pseudo)}}
-			</div>
-			<div class="mb-5">
-				{{ form_row(registrationForm.plainPassword, {
+				{{ form_errors(registrationForm) }}
+				<div class="flex flex-col justify-center items-center">
+					{{ form_start(registrationForm) }}
+					<div class="mb-5">
+						{{ form_row(registrationForm.email) }}
+					</div>
+					<div class="mb-5">
+						{{form_row(registrationForm.pseudo)}}
+					</div>
+					<div class="mb-5">
+						{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-			</div>
-			<div class="mb-5">
-				{{ form_row(registrationForm.agreeTerms) }}
-			</div>
+					</div>
+					<div class="mb-5">
+						{{ form_row(registrationForm.agreeTerms) }}
+					</div>
 
-			<button type="submit" class="btn">Go!</button>
-			{{ form_end(registrationForm) }}
-            </div>
+					<button type="submit" class="btn border p-2 px-5 bg-[#0b9c9f] rounded-lg">Go!</button>
+					{{ form_end(registrationForm) }}
+				</div>
+			</div>
 		</article>
 	</section>
 {% endblock %}

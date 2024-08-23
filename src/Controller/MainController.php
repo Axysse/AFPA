@@ -73,4 +73,21 @@ class MainController extends AbstractController
             'formations' => $formations
         ]);
     }
+
+    #[Route('/formations}', name: 'app_formations')]
+    public function formations(EntityManagerInterface $entity): Response
+    {
+
+        $formations = $entity->getRepository(Formations::class)->findAll();
+
+
+        $poles = $entity->getRepository(Poles::class)->findAll();
+
+
+        return $this->render('main/formations.html.twig', [
+            'controller_name' => 'MainController',
+            'poles' => $poles,
+            'formations' => $formations
+        ]);
+    }
 }
