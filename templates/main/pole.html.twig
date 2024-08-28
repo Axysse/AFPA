@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<section class="py-40 bg-cover bg-center flex justify-center items-center" style="background-image:url('{{asset(pole.image1)}}')">
+	<section class="py-40 bg-cover bg-center flex justify-center items-center" style="background-image:url('{{asset('images/' ~ pole.image1)}}')">
 		<div class="border bg-[#ffffff80] p-10 ">
 			<h1 class="text-xl font-bold inline-block">{{pole.name}}</h1>
 		</div>
@@ -13,7 +13,7 @@
 
 	<section class="flex flex-col max-md:w-96 lg:flex-row m-10 gap-10 items-center border-2 rounded-lg bg-[#05282508]">
 		<article class="md:w-[90%]">
-			<img src="{{asset(pole.image2)}}" class="w-96 lg:h-72 lg:rounded-l-lg">
+			<img src="{{asset('images/' ~ pole.image2)}}" class="w-96 lg:h-72 lg:rounded-l-lg">
 		</article>
 		<article>
 			<p>{{pole.texte1}}</p>
@@ -25,7 +25,7 @@
 			<p class="ml-5">{{pole.texte2}}</p>
 		</article>
 		<article class="md:w-[40%]">
-			<img src="{{asset(pole.image3)}}" class="w-96 lg:h-72 lg:rounded-r-lg">
+			<img src="{{asset('images/' ~ pole.image3)}}" class="w-96 lg:h-72 lg:rounded-r-lg">
 		</article>
 	</section>
 
@@ -42,7 +42,71 @@
 		<h2 class="font-semibold text-xl">
 			Teste tes conaissances!
 		</h2>
-		<button type="button" class="border bg-[#dcd873] p-5 px-10 text-red-700 rounded-lg hover:text-[#0b9c9f]">QUIZZ!</button>
+		<button type="button" class="border bg-[#ffcd00] hover:bg[#407ec9] p-5 px-10 text-red-700 rounded-lg hover:text-[#ac145a]">QUIZZ!</button>
+	</section>
+	<section class="p-10 ">
+	
+	{% for quizz in quizzs %}
+	{% if quizz.pole == pole %}
+
+
+	{{ form_start(form) }}	
+
+	{{quizz.question1}}
+	{{form_widget(form.reponse1, {'id': 'A1'})}}
+	{{form_widget(form.reponse2, {'id': 'A2'})}}
+	{{form_widget(form.reponse3, {'id': 'A3'})}}
+
+	{{form_widget(form.save, {'': ''})}}
+	<button type="" id="submit" name="submit" class="">ENVOYER</button>
+	<button type="" id="flush" name="flush" class="">FLUSH</button>
+	{{ form_end(form) }}
+
+	
+	<ul class="flex flex-row justify-around">
+	
+
+		
+		{# </li>
+		<li>
+		{{quizz.question2}}
+		</li>
+		<li>
+		{{quizz.question3}}
+		</li> #}
+		
+	</ul>
+
+	<script>
+	let rep = [];
+		const R1 = document.getElementById("A1");
+		const R2 = document.getElementById("A2");
+		const R3 = document.getElementById("A3");
+
+		const value1= R1.value;
+		const value2= R2.value;
+		const value3= R3.value;
+
+		const submit = document.getElementById("submit");
+		const flush = document.getElementById("flush");
+
+	 mig = submit.addEventListener("click", () => {
+			event.preventDefault();
+			rep.push(value1, value2, value3)
+			console.log(rep);
+			});
+
+	// flu = flush.addEventListener("click", () => {	
+	// 	event.preventDefault();
+	// 	rep = [];
+	// });
+		
+	</script>
+
+
+	{% endif %}
+	{% endfor %}
+	
 	</section>
 
 	<h2 class="flex justify-center text-center capitalize text-xl font-bold mt-16">Découvrez nos formations liées ce pôle : </h2>
@@ -50,15 +114,16 @@
 	<section class="m-10 flex flex-wrap justify-center gap-14">
 		
 		{% for formation in formations %}
+		{% if formation.pole == pole %}
 		
 					<div class="w-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 						<a href="{{path('app_formation', {id: formation.id})}}">
-							<img class="rounded-t-lg w-96 h-72" src="{{asset(formation.image1)}}" alt=""/>
+							<img class="rounded-t-lg w-96 h-72" src="{{asset('images/' ~ formation.image1)}}" alt=""/>
 						</a>
 						<div class="p-5">
 							<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{formation.name}}</h5>
 							<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 truncate">{{formation.texte1}}</p>
-							<a href="{{path('app_formation', {id: formation.id})}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#dcd873] rounded-lg hover:bg-[#0b9c9f] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							<a href="{{path('app_formation', {id: formation.id})}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-[#ffcd00] rounded-lg hover:bg-[#0b9c9f] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 								Read more
 								<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
 									<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -66,9 +131,12 @@
 							</a>
 						</div>
 					</div>
+		{% endif %}
 		{% endfor %}
 
 	</section>
 
-	{% block endjs %}{% endblock %}
+	{% block endjs %}
+
+	{% endblock %}
 {% endblock %}

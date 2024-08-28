@@ -7,26 +7,30 @@
 </article>
 
 <article class="flex gap-10 mr-10">
-<a href="{{path('app_login')}}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Connexion</a>
+
+<a href="{{path('app_login')}}" class="border border-black-500 bg-[#407ec9] rounded-xl p-2 text-white" >Connexion</a>
 {% if app.user %}
-<a href="{{ path('app_logout') }}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Déconnexion</a>
+<a href="{{ path('app_logout') }}" class="border border-black-500 bg-[#407ec9] rounded-xl p-2 text-white" >Déconnexion</a>
+{% if "ROLE_ADMIN" in app.user.roles %}
+<a href="{{path('admin')}}" class="border border-black-500 bg-[#407ec9] rounded-xl p-2 text-white" >Admin</a>
+{% endif %}
 {% else %}
-<a href="{{path('app_register')}}" class="border border-black-500 bg-[#0b9c9f] rounded-xl p-2 text-white" >Inscription</a>
+<a href="{{path('app_register')}}" class="border border-black-500 bg-[#407ec9] rounded-xl p-2 text-white" >Inscription</a>
 {% endif %}
 </article>
 
 </section>
 
-<section class="bg-[#86b31c] py-2 flex justify-center underline decoration-[#dcd873] underline-offset-8">
-    <a href="{{path('app_formations')}}" class="text-[#dcd873] hover:text-[#0b9c9f] text-xs lg:text-base font-bold">Nos formations</a>
+<section class="bg-[#86bc25] py-2 flex justify-center underline decoration-[#dcd873] underline-offset-8">
+    <a href="{{path('app_formations')}}" class="text-[#dcd873] hover:text-[#ac145a] text-xs lg:text-base font-bold">Nos formations</a>
 </section>
 
-<section class="bg-[#86b31c] py-5">
+<section class="bg-[#86bc25] py-5">
 
 <ul class="flex flex-row justify-around max-lg:gap-5 text-[#dcd873]">
 
 {% for pole in poles %}
-<li><a href="{{path('app_pole', {id: pole.id})}}" class="hover:text-[#0b9c9f] text-xs lg:text-base font-bold">{{pole.name}}</a></li>
+<li><a href="{{path('app_pole', {id: pole.id})}}" class="hover:text-[#ac145a] text-xs lg:text-base font-bold">{{pole.name}}</a></li>
 {% endfor %}
 
 </ul>

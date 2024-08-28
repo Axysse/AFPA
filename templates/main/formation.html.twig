@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="py-40 bg-cover bg-center flex justify-center items-center" style="background-image:url('{{asset(formation.image1)}}')">
+<section class="py-40 bg-cover bg-center flex justify-center items-center" style="background-image:url('{{asset('images/' ~ formation.image1)}}')">
 		<div class="border bg-[#ffffff80] p-10 ">
 			<h1 class="text-xl font-bold inline-block">{{formation.name}}</h1>
 		</div>
@@ -9,7 +9,7 @@
 
     <section class="flex flex-col max-md:w-96 lg:flex-row m-10 gap-10 items-center border-2  rounded-lg bg-[#05282508]">
 		<article class="md:w-[90%]">
-			<img src="{{asset(formation.image2)}}" class="w-96 lg:h-72 lg:rounded-l-lg">
+			<img src="{{asset('images/' ~ formation.image2)}}" class="w-96 lg:h-72 lg:rounded-l-lg">
 		</article>
 		<article>
 			<p>{{formation.texte1}}</p>
@@ -21,7 +21,7 @@
 			<p class="ml-5">{{formation.texte2}}</p>
 		</article>
 		<article class="md:w-[40%]">
-			<img src="{{asset(formation.image3)}}" class="w-96 lg:h-72 lg:rounded-r-lg">
+			<img src="{{asset('images/' ~ formation.image3)}}" class="w-96 lg:h-72 lg:rounded-r-lg">
 		</article>
 	</section>
 

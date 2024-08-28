@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\PolesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PolesRepository::class)]
@@ -16,32 +19,47 @@ class Poles
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image1 = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image2 = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image3 = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $video = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte1 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte2 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte3 = null;
 
-    #[ORM\OneToOne(mappedBy: 'pole_id', cascade: ['persist', 'remove'])]
-    private ?Formations $formations = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image1 = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image2 = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image3 = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $video = null;
+
+    /**
+     * @var Collection<int, Formations>
+     */
+    #[ORM\OneToMany(targetEntity: Formations::class, mappedBy: 'pole', orphanRemoval: true)]
+    private Collection $formations;
+
+    /**
+     * @var Collection<int, QuizzQuestions>
+     */
+    #[ORM\OneToMany(targetEntity: QuizzQuestions::class, mappedBy: 'pole', orphanRemoval: true)]
+    private Collection $quizzQuestions;
+
+    public function __construct()
+    {
+        $this->formations = new ArrayCollection();
+        $this->quizzQuestions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +86,42 @@ class Poles
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTexte1(): ?string
+    {
+        return $this->texte1;
+    }
+
+    public function setTexte1(?string $texte1): static
+    {
+        $this->texte1 = $texte1;
+
+        return $this;
+    }
+
+    public function getTexte2(): ?string
+    {
+        return $this->texte2;
+    }
+
+    public function setTexte2(?string $texte2): static
+    {
+        $this->texte2 = $texte2;
+
+        return $this;
+    }
+
+    public function getTexte3(): ?string
+    {
+        return $this->texte3;
+    }
+
+    public function setTexte3(?string $texte3): static
+    {
+        $this->texte3 = $texte3;
 
         return $this;
     }
@@ -120,55 +174,66 @@ class Poles
         return $this;
     }
 
-    public function getTexte1(): ?string
-    {
-        return $this->texte1;
-    }
-
-    public function setTexte1(string $texte1): static
-    {
-        $this->texte1 = $texte1;
-
-        return $this;
-    }
-
-    public function getTexte2(): ?string
-    {
-        return $this->texte2;
-    }
-
-    public function setTexte2(string $texte2): static
-    {
-        $this->texte2 = $texte2;
-
-        return $this;
-    }
-
-    public function getTexte3(): ?string
-    {
-        return $this->texte3;
-    }
-
-    public function setTexte3(string $texte3): static
-    {
-        $this->texte3 = $texte3;
-
-        return $this;
-    }
-
-    public function getFormations(): ?Formations
+    /**
+     * @return Collection<int, Formations>
+     */
+    public function getFormations(): Collection
     {
         return $this->formations;
     }
 
-    public function setFormations(Formations $formations): static
+    public function addFormation(Formations $formation): static
     {
-        // set the owning side of the relation if necessary
-        if ($formations->getPoleId() !== $this) {
-            $formations->setPoleId($this);
+        if (!$this->formations->contains($formation)) {
+            $this->formations->add($formation);
+            $formation->setPole($this);
         }
 
-        $this->formations = $formations;
+        return $this;
+    }
+
+    public function removeFormation(Formations $formation): static
+    {
+        if ($this->formations->removeElement($formation)) {
+            // set the owning side to null (unless already changed)
+            if ($formation->getPole() === $this) {
+                $formation->setPole(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function __toString(){
+        return $this->name; 
+      }
+
+    /**
+     * @return Collection<int, QuizzQuestions>
+     */
+    public function getQuizzQuestions(): Collection
+    {
+        return $this->quizzQuestions;
+    }
+
+    public function addQuizzQuestion(QuizzQuestions $quizzQuestion): static
+    {
+        if (!$this->quizzQuestions->contains($quizzQuestion)) {
+            $this->quizzQuestions->add($quizzQuestion);
+            $quizzQuestion->setPole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzQuestion(QuizzQuestions $quizzQuestion): static
+    {
+        if ($this->quizzQuestions->removeElement($quizzQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($quizzQuestion->getPole() === $this) {
+                $quizzQuestion->setPole(null);
+            }
+        }
 
         return $this;
     }

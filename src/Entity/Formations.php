@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FormationsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FormationsRepository::class)]
@@ -13,46 +14,34 @@ class Formations
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'formations', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Poles $pole_id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte1 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte2 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texte3 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $image1 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $image2 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $image3 = null;
+
+    #[ORM\ManyToOne(inversedBy: 'formations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Poles $pole = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPoleId(): ?Poles
-    {
-        return $this->pole_id;
-    }
-
-    public function setPoleId(Poles $pole_id): static
-    {
-        $this->pole_id = $pole_id;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -138,4 +127,20 @@ class Formations
 
         return $this;
     }
+
+    public function getPole(): ?Poles
+    {
+        return $this->pole;
+    }
+
+    public function setPole(?Poles $pole): static
+    {
+        $this->pole = $pole;
+
+        return $this;
+    }
+
+        public function __toString(){
+          return $this->name; 
+        }
 }
